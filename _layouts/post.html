@@ -1,0 +1,25 @@
+---
+layout: base
+---
+
+<article>
+  <header>
+    <h1>{{ page.title | escape }}</h1>
+    <p>
+      {%- assign date_format = "%b %-d, %Y" -%}
+      <time datetime="{{ page.date }}">
+        {{ page.date | date: date_format }}
+      </time>
+      {%- if page.author -%}
+        • {% for author in page.author %}
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">{{ author }}</span></span>
+            {%- if forloop.last == false %}, {% endif -%}
+        {% endfor %}
+      {%- endif -%}</p>
+  </header>
+
+  <div>
+    {{ content }}
+  </div>
+</article>
