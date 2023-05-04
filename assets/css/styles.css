@@ -34,10 +34,16 @@ ul {
 	padding-left: 2rem;
 }
 
-.highlight pre {
-	font-family: monospace;
-	padding: 2em;
+.highlighter-rouge {
+	color: #a6e22e; 
 	background-color: #272822;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	padding: 0 4px;
+}
+
+.highlight pre {
+	padding: 1em;
 }
 .highlight .hll { background-color: #272822; }
 .highlight .c { color: #75715e } /* Comment */

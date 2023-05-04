@@ -1,30 +1,75 @@
 ---
 layout: post
-title:  "Event Souring"
+title:  "Event Sourcing"
 date:   2023-04-27
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-Jekyll requires blog post files to be named according to the following format:
+## WIP
 
-`YEAR-MONTH-DAY-title.MARKUP`
+## What is Event Sourcing
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+`Git` for data
 
-Jekyll also offers powerful support for code snippets:
+```javascript
+function sayHello(name) {
+  if (!name) {
+    console.log('Hello World');
+  } else {
+    console.log(`Hello ${name}`);
+  }
+}
+```
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
+## Glossary
 
-# => prints 'Hi, Tom' to STDOUT
+* Command - Request for change
+* Event - Something that happnend
+* Aggregate/Projection - Result of all events
 
-{% endhighlight %}
+## Pros
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+* Event driven - Decouples consumers from producer
+* Can replay events so see how system got into that state
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+## Cons
+
+* How big is an Event?
+  * `UserUpdatedQuestion` - What if you only need to update the title of a question?
+  * `UserUpdatedQuestionTitle` - Are we going to create a Handler for each property?
+  * `UserUpdatedProperty` - ?Harder to make sense of?
+  * `QuestionTitleChanged` - ?Was the event caused by a user?
+
+## Investigate
+
+* Race conditions
+  * Has user voted on the comment? -> No -> Create `UserVotedOnComment` event
+    * As Event sourcing is eventually consistent there will be a peroid
+      where the predicate is still true until the event is processed so
+      more of the same event could be added to the queue
+
+## Datomic
+
+`[entity attribute value transcation added]` (datom)
+
+* Entity - Unquie identifier for an entity
+* Attribute - Property assoicated with entity
+* Value - Value of the property
+* Transaction - When we learned the fact
+* Added - Are we adding or retracting the fact
+
+* Datomic is basically just a list of Datoms (Over simplified)
+
+* Transaction - Command (Attempt to append new facts)
+* Transcations - Facts that have been applied
+* Datomic - Event log + Aggregate
+
+### Datomic - Pros
+
+* Datoms are fine grain no guessing of Event size
+* No need to re-process event log
+  * `(d/as-of db #inst "2017-12-25")` - Can view database as of a date
+  * `(d/tx-range (d/log conn) t0 t1)` - Can view transactions between date range
+
+## Resources
+
+* https://vvvvalvalval.github.io/posts/2018-11-12-datomic-event-sourcing-without-the-hassle.html
