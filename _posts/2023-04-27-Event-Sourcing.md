@@ -1,51 +1,47 @@
 ---
 layout: post
-title:  "Event Sourcing"
+title:  "WIP - Event Sourcing"
 date:   2023-04-27
 ---
 
-## WIP
+## What is Event Sourcing?
 
-## What is Event Sourcing
+"`Git` for data"
 
-`Git` for data
-
-```javascript
-function sayHello(name) {
-  if (!name) {
-    console.log('Hello World');
-  } else {
-    console.log(`Hello ${name}`);
-  }
-}
-```
+A traditional system would overwrite a value in place (PLOP).
+`Event sourcing` instead records each event then reduces over the `Event log`
+leading to the latest state `projection` just like bank account transactions
+or commits for Git
 
 ## Glossary
 
-* Command - Request for change
 * Event - Something that happnend
-* Aggregate/Projection - Result of all events
+* Event log - Append-only log
+* Projection - Result of events
+* Stream - Related events
+
+## Example
+
+```sql
+CREATE TABLE (
+    id uuid primary key
+    stream_id uuid
+    version int
+    type varchar(200)
+    data jsonb
+)
+```
 
 ## Pros
 
-* Event driven - Decouples consumers from producer
-* Can replay events so see how system got into that state
+* Audit Trail - How did your system got into it's current state
+* Debugging - Extract events from log and replay them in a test enviorment
 
 ## Cons
 
 * How big is an Event?
   * `UserUpdatedQuestion` - What if you only need to update the title of a question?
   * `UserUpdatedQuestionTitle` - Are we going to create a Handler for each property?
-  * `UserUpdatedProperty` - ?Harder to make sense of?
-  * `QuestionTitleChanged` - ?Was the event caused by a user?
-
-## Investigate
-
-* Race conditions
-  * Has user voted on the comment? -> No -> Create `UserVotedOnComment` event
-    * As Event sourcing is eventually consistent there will be a peroid
-      where the predicate is still true until the event is processed so
-      more of the same event could be added to the queue
 
 ## Datomic
 
@@ -72,4 +68,5 @@ function sayHello(name) {
 
 ## Resources
 
-* https://vvvvalvalval.github.io/posts/2018-11-12-datomic-event-sourcing-without-the-hassle.html
+* [(PLOP) The Value of Values - Rich Hickey](https://www.youtube.com/watch?v=-6BsiVyC1kM&ab_channel=InfoQ)
+* <https://vvvvalvalval.github.io/posts/2018-11-12-datomic-event-sourcing-without-the-hassle.html>

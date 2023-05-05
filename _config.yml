@@ -8,3 +8,4 @@ github_username: grierson
 
 plugins:
   - jekyll-feed
+  - jekyll-spaceship
