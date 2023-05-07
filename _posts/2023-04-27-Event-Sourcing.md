@@ -22,6 +22,14 @@ or commits for Git
 
 ## Example
 
+**Event** - Store each event in a DB row
+
+* id - Unique id for event
+* stream-id - Link related events together
+* version - ?
+* type - Event type
+* data - Any additional data added to the event
+
 ```sql
 CREATE TABLE (
     id uuid primary key
@@ -30,6 +38,44 @@ CREATE TABLE (
     type varchar(200)
     data jsonb
 )
+```
+
+```clojure
+(defn find-events
+    "Find all events releated to thing in database"
+    [database thing-id])
+
+(defn projection
+  "Apply events to create projection"
+  [events]
+  (reduce apply-event events))
+
+(defn get-latest-projection
+    "Helper function to fetch and apply events"
+    [database thing-id]
+    (let [events (find-events database thing-id)
+          projection (projection events)]
+        projection))
+
+(defn add-event
+    "Adds event to events table"
+    [tx event])
+
+(defn update-projection
+    "Update projection"
+    [tx thing-id]
+    (db/update-record (get-latest-projection tx thing-id)))
+
+(defn command
+    "Preforms side-effect and trys to the log event within a transaction"
+    [database projection total-service thing-id]
+    (jdbc/with-db-transaction [tx database]
+        (let [thing (get-latest-projection database thing-id)]
+              total-response (total-service/get-total total-service thing)]
+            (when (:error total-response)
+                (throw "exception fetching total"))
+            (add-event tx (thing-events/thing-event thing-id))
+            (update-projection tx thing-id))))
 ```
 
 ## Pros
