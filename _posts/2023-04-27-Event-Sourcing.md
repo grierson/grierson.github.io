@@ -6,12 +6,22 @@ date:   2023-04-27
 
 ## What is Event Sourcing?
 
-"`Git` for data"
+> TL;DR `Event sourcing` is basically `Git` for data
 
-A traditional system would overwrite a value in place (PLOP).
-`Event sourcing` instead records each event then reduces over the `Event log`
-leading to the latest state `projection` just like bank account transactions
-or commits for Git
+With `event sourcing` you store each `event` (state transition) in an `event log` so you have auditability
+just like git so...
+
+* **Latest**
+  * Using the `event log` apply each event to generate the `projection` (state)
+* **Check previous states**
+  * Only apply a certain amount of `events` in the `event log` so that you can see the `projection` at a certain time
+* **Experiment applying new events**
+  * What would the `projection` look like if I applied this `event`?
+* **Bisect**
+  * Run through applying `events` until condition met
+
+Whereas with a traditional system we overwrite the state in place (PLOP) losing
+each state transition so we have no idea how the state ended up in that state.
 
 ## Glossary
 
@@ -22,21 +32,14 @@ or commits for Git
 
 ## Example
 
-**Event** - Store each event in a DB row
-
-* id - Unique id for event
-* stream-id - Link related events together
-* version - ?
-* type - Event type
-* data - Any additional data added to the event
-
 ```sql
+# Event stored in a DB
+
 CREATE TABLE (
-    id uuid primary key
-    stream_id uuid
-    version int
-    type varchar(200)
-    data jsonb
+    id uuid primary key     # Unique id for event
+    stream_id uuid          # The aggregate the event blongs too
+    type varchar(200)       # Event type name
+    data jsonb              # Additional data include with the event
 )
 ```
 
@@ -80,8 +83,13 @@ CREATE TABLE (
 
 ## Pros
 
-* Audit Trail - How did your system got into it's current state
-* Debugging - Extract events from log and replay them in a test enviorment
+It creates an **Audit Trail** so you can see how your system got into
+its current state making it easier to **Debug** and reason about.
+
+* **Replayability** - Extract all `events` related to an `aggregate` from the
+`event log` and replay them in a test enviorment so you can inspect each state transision
+* **Bisect** - Apply each event until condition met
+* **Experement** - What would the projection look like if you applied this event?
 
 ## Cons
 
@@ -89,28 +97,10 @@ CREATE TABLE (
   * `UserUpdatedQuestion` - What if you only need to update the title of a question?
   * `UserUpdatedQuestionTitle` - Are we going to create a Handler for each property?
 
-## Datomic
+## Eventual Consistency
 
-`[entity attribute value transcation added]` (datom)
+## Versioning
 
-* Entity - Unquie identifier for an entity
-* Attribute - Property assoicated with entity
-* Value - Value of the property
-* Transaction - When we learned the fact
-* Added - Are we adding or retracting the fact
-
-* Datomic is basically just a list of Datoms (Over simplified)
-
-* Transaction - Command (Attempt to append new facts)
-* Transcations - Facts that have been applied
-* Datomic - Event log + Aggregate
-
-### Datomic - Pros
-
-* Datoms are fine grain no guessing of Event size
-* No need to re-process event log
-  * `(d/as-of db #inst "2017-12-25")` - Can view database as of a date
-  * `(d/tx-range (d/log conn) t0 t1)` - Can view transactions between date range
 
 ## Resources
 
