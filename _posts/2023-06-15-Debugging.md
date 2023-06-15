@@ -4,6 +4,8 @@ title:  "Debugging"
 date:   2023-06-15
 ---
 
+## Mindset
+
 ![Sherlock Holmes]({{ site.baseurl | prepend: site.url }}/images/sherlock-holmes.png)
 
 Having the right mindset
@@ -13,6 +15,8 @@ Having the right mindset
 * Timebox
 * Priortise
   * An unlikey bug with little consequence doesn't need to be fixed right away
+
+## Steps
 
 ```mermaid!
 flowchart LR
@@ -28,15 +32,11 @@ flowchart LR
 
 Something isn't working as expected.
 
-### :fire: !!! __STATE THE PROBLEM__ !!! :fire: #1
+:fire: **!!! STATE THE PROBLEM !!!** :fire:
 
 > If you don't know where you are going, you might wind up someplace else
 
 <img align="right" src="{{ site.baseurl | prepend: site.url }}/images/writing.png">
-
-1. Steps you/they took
-2. What you/they expected
-3. What actually happend
 
 * Write down your understanding and improve as you go along
   * Does you explanation cover every point
@@ -44,32 +44,33 @@ Something isn't working as expected.
   * Progressively ask less stupid questions
 * Feynman technique
   * Explaining the problem to a rubber duck helps finds the gaps in your understanding
+  * Talk to Pair
 * Deductive reasoning (Suduku)
   * What do we know? (Constraints, Facts)
   * What do we need to know?
     * What is `x`?
     * Does `y` work how I expect?
-* Talk to Pair
 
 ### Sequence of events
 
 <img align="right" src="{{ site.baseurl | prepend: site.url }}/images/sequence.png">
 
 * :fire: Write down the sequence of events that lead to bug
-* Analyse the evidence
-  * Get screen recording/screenshot
-  * Analyse the logs
-  * Check the database/event feed/queue
-* Draw it
-  * Flowchart
-  * Network
-  * State
-  * Sequence (Backed with logs)
-  * Graphviz
-* Read the stacktrace __carefully!!!__
+  * Draw it
+    * Flowchart
+    * Network
+    * State
+    * Sequence (Backed with logs)
+    * Graphviz
+* What you/they expected compared to what actually happended?
+  * Analyse the evidence
+    * Get screen recording/screenshot
+    * Analyse the logs
+    * Check the database/event feed/queue
+* Read the stacktrace **carefully!!!**
 * Check recent commits (Git bisect:fire:)
 
-### Reproduce the bug
+#### Can you reproduce the bug?
 
 * Reproducing the bug means you can control each variable while you experiment
 * Create a smaller program with the same bug so you have less variables
@@ -77,13 +78,17 @@ and a quicker feedback loop
 
 #### Skepticism
 
-* "There were no footmarks" - Man
-* "Meaing that you saw none?" - Sherlock
+Be skeptical of what's presented to you
 
-"Error occurs on Cassandra but not H2"
+```
+"There were no footmarks" - Man
+"Meaing that you saw none?" - Sherlock
+```
 
-Write a test that performs the problem query against both databases so
-have no other dependencies.
+**"The error occurs on Cassandra but not H2"**
+
+Write a test that performs the problematic query on both databases
+so their are no other dependencies.
 
 The problem was actually a miscommunication problem,
 reproducing the issue showed the problem occured on both databases
@@ -147,8 +152,8 @@ Returns a string of all elements in coll, as returned by (seq coll),
 
 ## Hypothesis (Cause)
 
-A proposed explanation made on the basis of __limited eviedence__ as
-a __starting point__ for further investigation
+A proposed explanation made on the basis of **limited eviedence** as
+a **starting point** for further investigation
 
 Cause mapping (N whys). More than one reason why something happened.
 
@@ -195,7 +200,7 @@ An event preceding an effect without which the effect would not have occurred
 
 <img align="right" src="{{ site.baseurl | prepend: site.url }}/images/experiment.png">
 
-* :fire: __Write down your experiments__ :fire:
+* :fire: **Write down your experiments** :fire:
   * What variable did you test?
   * What did you expect? What was the actual result?
   * Why the experiment makes sense?
