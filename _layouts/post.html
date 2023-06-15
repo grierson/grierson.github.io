@@ -6,15 +6,11 @@ layout: base
 
 <article>
 	<header>
-		<h1>{{ page.title | escape }}</h1>
+		<h2>{{ page.title | escape }}</h2>
 		<time datetime="{{ page.date }}">
 			{{ page.date | date_to_string }}
 		</time>
 	</header>
 
-	<br />
-
-	<div>
-		{{ content }}
-	</div>
+	{{ content }}
 </article>

@@ -1,9 +1,8 @@
 title: Kyle Grierson's Blog
 description: >- # this means to ignore newlines until "baseurl:"
   Kyle Grierson's blog
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: _grierson
+# baseurl: "https://grierson.github.io/" # the subpath of your site, e.g. /blog
+# url: "grierson.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: grierson
 
 plugins:

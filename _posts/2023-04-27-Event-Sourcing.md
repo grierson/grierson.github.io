@@ -6,7 +6,7 @@ date:   2023-04-27
 
 ## What is Event Sourcing?
 
-> TL;DR `Event sourcing` is basically `Git` for data
+> **TL;DR** `Event sourcing` is basically `Git` for data
 
 With `event sourcing` you store each `event` (state transition) in an `event log` so you have auditability
 just like git so...
@@ -99,8 +99,21 @@ its current state making it easier to **Debug** and reason about.
 
 ## Eventual Consistency
 
+Should the projection update immediately?
+
+Apply the event then
+
+* Yes, Update the projection in one transaction
+* No, Do nothing
+
 ## Versioning
 
+What happens if you need to retroactively update an event type.
+Well there are two ways for managing versioning.
+
+* Create a new event `fix-previous-event` but where in your Domain model
+does this event exist?
+* Event versioning
 
 ## Resources
 
