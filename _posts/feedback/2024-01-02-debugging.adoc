@@ -12,11 +12,9 @@
   - What do you know?
   - What do you need to know?
 
-== Contents
-
 == Mindset
 
-<img align="right" src="/sherlock-holmes.png">
+image::sherlock-holmes.png[]
 
 Having the right mindset
 
@@ -45,9 +43,10 @@ Something isn't working as expected.
 
 === 🔥🔥🔥 STATE THE PROBLEM 🔥🔥🔥
 
-> If you don't know where you are going, you might wind up someplace else
+[quote, Lewis Carroll]
+If you don't know where you are going, any road will get you there.
 
-<img align="right" src="/writing.png">
+image::writing.png[]
 
 - Write down your understanding and improve as you go along
   Does your explanation cover every point
@@ -82,18 +81,18 @@ reproducing the issue showed the problem occurred on both databases
 
 === Sequence of events
 
-<img align="right" src="/sequence.png">
+image::sequence.png[]
 
 - 🔥 Map the sequence of events that lead to bug
-  - Draw it
-    - Sequence (Backed with logs)
-    - Network
-    - State
+  ** Draw it
+    *** Sequence (Backed with logs)
+    *** Network
+    *** State
 - What did you/they expect compared to what happened?
-  - Analyse the evidence
-    - Get a screen recording/screenshot
-    - Read the logs/stack trace **carefully!!!**
-    - Check the database/event feed/queue
+  ** Analyse the evidence
+    *** Get a screen recording/screenshot
+    *** Read the logs/stack trace **carefully!!!**
+    *** Check the database/event feed/queue
 - Check recent commits (Git bisect)
 
 === Can you reproduce the bug?
@@ -104,7 +103,7 @@ reproducing the issue showed the problem occurred on both databases
 
 === Print statements
 
-<img align="right" src="/pressure.png">
+image::pressure.png[]
 
 Just like gauges in mechanical systems, add instrumentation to
 your system so you can see what happening
@@ -116,9 +115,9 @@ your system so you can see what happening
 
 (defn foo
       [n]
-      (cond =p (> n 40) =p (+ n 20)
-            =p (> n 20) =p (- (first n) 20)
-            :else =p 0))
+      (cond #p (> n 40) #p (+ n 20)
+            #p (> n 20) #p (- (first n) 20)
+            :else #p 0))
 
 (foo n)
 
@@ -133,7 +132,7 @@ Or better yet just evaluate each expression in the REPL
 
 === Research
 
-<img align="right" src="/user-guide.png">
+image::user-guide.png[]
 
 - RTFM
 - Google
@@ -180,7 +179,7 @@ flowchart LR
 
 An event preceding an effect without which the effect would not have occurred
 
-<img align="right" src="/think.png">
+image::think.png[]
 
 - 🔥 Write down your hypothesises
 - Include silly ideas
@@ -208,27 +207,27 @@ An event preceding an effect without which the effect would not have occurred
 3. Small
 4. Change only one thing
 
-<img align="right" src="/experiment.png">
+image::experiment.png[]
 
 - 🔥 **Write down your experiments**
-  - What variable did you test?
-  - What did you expect? What was the actual result?
-  - Why does the experiment make sense?
+  ** What variable did you test?
+  ** What did you expect? What was the actual result?
+  ** Why does the experiment make sense?
 - Short feedback loop
-  - REPL
-  - Unit test
-  - Try good and bad inputs to demonstrate the defect
+  ** REPL
+  ** Unit test
+  ** Try good and bad inputs to demonstrate the defect
 
 == 4. Observation
 
-1. Understand all the outputs
-   1. Don't know the output? How do you know if it's related to the problem or not
-2. Suspect correlations
-   1. But in the last 5 lines
-3. Use good tools (More outputs)
-   1. Debuggers, Logging, Print, Metrics
+image::report.png[]
 
-<img align="right" src="/report.png">
+1. Understand all the outputs
+   ** Don't know the output? How do you know if it's related to the problem or not
+2. Suspect correlations
+   ** But in the last 5 lines
+3. Use good tools (More outputs)
+   ** Debuggers, Logging, Print, Metrics
 
 - IF experiment supports hypothesis
 - THEN refine the hypothesis or diagnose
@@ -236,7 +235,7 @@ An event preceding an effect without which the effect would not have occurred
 
 == 5. Theory (Diagnosis)
 
-<img align="right" src="/lightbulb.png">
+image::lightbulb.png[]
 
 - A hypothesis offering valid predictions that can be observed
 - Blog/tell a friend what you learned
@@ -252,24 +251,24 @@ An event preceding an effect without which the effect would not have occurred
 
 == Resources
 
-- ["Design in Practice" by Rich Hickey](https://youtu.be/c5QF2HjHLSE?si=JKrXAgNi3q_ZEMcc)
-- [Debugging with the Scientific Method - Stuart Halloway](https://www.youtube.com/watch?v=FihU5JxmnBg&ab_channel=ClojureTV)
-- [Sherlock Holmes, Consulting Developer - Stuart Halloway](https://www.youtube.com/watch?v=OUZZKtypink&ab_channel=ClojureTV)
-- [Hammock Driven Development](https://www.youtube.com/watch?v=f84n5oFoZBc&ab_channel=ClojureTV)
-- [Running with Scissors](https://www.youtube.com/watch?v=Qx0-pViyIDU&ab_channel=StrangeLoopConference)
-- [REPL DEBUGGING: NO STACKTRACE REQUIRED](http://blog.cognitect.com/blog/2017/6/5/repl-debugging-no-stacktrace-required)
-- [The Pocket Guide to Debugging](https://wizardzines.com/zines/debugging-guide/)
-- [ByteByteGo - Debugging Like A Pro](https://blog.bytebytego.com/p/ep48-debugging-like-a-pro)
-- [Clojure from the ground up: debugging](https://aphyr.com/posts/319-clojure-from-the-ground-up-debugging)
+- https://youtu.be/c5QF2HjHLSE?si=JKrXAgNi3q_ZEMcc["Design in Practice" by Rich Hickey]
+- https://www.youtube.com/watch?v=FihU5JxmnBg&ab_channel=ClojureTV[Debugging with the Scientific Method - Stuart Halloway]
+- https://www.youtube.com/watch?v=OUZZKtypink&ab_channel=ClojureTV[Sherlock Holmes, Consulting Developer - Stuart Halloway]
+- https://www.youtube.com/watch?v=f84n5oFoZBc&ab_channel=ClojureTV[Hammock Driven Development]
+- https://www.youtube.com/watch?v=Qx0-pViyIDU&ab_channel=StrangeLoopConference[Running with Scissors]
+- http://blog.cognitect.com/blog/2017/6/5/repl-debugging-no-stacktrace-required[REPL DEBUGGING: NO STACKTRACE REQUIRED]
+- https://wizardzines.com/zines/debugging-guide/[The Pocket Guide to Debugging]
+- https://blog.bytebytego.com/p/ep48-debugging-like-a-pro[ByteByteGo - Debugging Like A Pro]
+- https://aphyr.com/posts/319-clojure-from-the-ground-up-debugging[Clojure from the ground up: debugging]
 
 == Credits
 
-- <a href="https://www.flaticon.com/free-icons/sherlock" title="sherlock icons">Sherlock icons created by Freepik - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/writing" title="writing icons">Writing icons created by Freepik - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/sequence" title="sequence icons">Sequence icons created by Freepik - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/pressure" title="pressure icons">Pressure icons created by surang - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/guideline" title="guideline icons">Guideline icons created by Freepik - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/think" title="think icons">Think icons created by Freepik - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/experiment" title="experiment icons">Experiment icons created by Freepik - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/report" title="report icons">Report icons created by catkuro - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/idea" title="idea icons">Idea icons created by Freepik - Flaticon</a>
+- https://www.flaticon.com/free-icons/sherlock[Sherlock icons created by Freepik - Flaticon]
+- https://www.flaticon.com/free-icons/writing[Writing icons created by Freepik - Flaticon]
+- https://www.flaticon.com/free-icons/sequence[Sequence icons created by Freepik - Flaticon]
+- https://www.flaticon.com/free-icons/pressure[Pressure icons created by surang - Flaticon]
+- https://www.flaticon.com/free-icons/guideline[Guideline icons created by Freepik - Flaticon]
+- https://www.flaticon.com/free-icons/think[Think icons created by Freepik - Flaticon]
+- https://www.flaticon.com/free-icons/experiment[Experiment icons created by Freepik - Flaticon]
+- https://www.flaticon.com/free-icons/report[Report icons created by catkuro - Flaticon]
+- https://www.flaticon.com/free-icons/idea[Idea icons created by Freepik - Flaticon]
