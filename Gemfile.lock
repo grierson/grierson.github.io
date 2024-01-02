@@ -4,8 +4,13 @@ GEM
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     asciidoctor (2.0.20)
-    asciidoctor-diagram (1.5.19)
+    asciidoctor-diagram (2.2.14)
       asciidoctor (>= 1.5.7, < 3.x)
+      asciidoctor-diagram-ditaamini (~> 1.0)
+      asciidoctor-diagram-plantuml (~> 1.2021)
+      rexml
+    asciidoctor-diagram-ditaamini (1.0.3)
+    asciidoctor-diagram-plantuml (1.2023.12)
     colorator (1.1.0)
     concurrent-ruby (1.2.2)
     em-websocket (0.5.3)
@@ -91,12 +96,12 @@ PLATFORMS
   x86_64-linux-android
 
 DEPENDENCIES
-  asciidoctor-diagram (~> 1.5.4)
+  asciidoctor-diagram (~> 2.2.14)
   http_parser.rb (~> 0.6.0)
   jekyll (~> 4.3.3)
-  jekyll-asciidoc
-  jekyll-feed (~> 0.12)
-  pygments.rb (~> 2.4.0)
+  jekyll-asciidoc (~> 3.0.1)
+  jekyll-feed (~> 0.17)
+  pygments.rb (~> 2.4.1)
 
 BUNDLED WITH
    2.5.3
