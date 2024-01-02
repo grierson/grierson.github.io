@@ -3,20 +3,26 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ site.title }}</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 1em;
+      max-width: 80ch;
+    }
+  </style>
 </head>
 
 <body>
   <nav>
     <a href="/">Home</a>
+    <a href="https://github.com/grierson">Github</a>
   </nav>
   <h1>{{ site.title }}</h1>
   <section>
     {{ content }}
   </section>
-  <footer>
-    &copy; to Kyle Grierson
-  </footer>
 </body>
 
 </html>

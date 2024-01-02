@@ -1,6 +1,10 @@
 span.icon > .fa {
   cursor: default;
 }
+.admonitionblock table {
+  background: silver;
+}
+
 .admonitionblock td.icon {
   text-align: center;
   width: 80px;

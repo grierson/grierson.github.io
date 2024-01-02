@@ -1,8 +1,10 @@
 = Sample Page
 :page-layout: post
-:page-permalink: /sample/
+:page-category: simple
 
 This is a sample page composed in AsciiDoc.
+Jekyll converts it to HTML using {url-asciidoctor}[Asciidoctor].
+Jekyll converts it to HTML using {url-asciidoctor}[Asciidoctor].
 Jekyll converts it to HTML using {url-asciidoctor}[Asciidoctor].
 
 [source,clojure]
