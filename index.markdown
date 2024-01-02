@@ -2,15 +2,16 @@
 layout: default
 ---
 
-<ul>
+Some of my software engineering notes
+
 {% for category in site.categories %}
-  <li>
-    <h2>{{ category | first | capitalize }}</h2>
-    <ul>
-    {% for post in category.last %}
-      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-    </ul>
-  </li>
+
+<h2>{{ category | first | capitalize }}</h2>
+  <ul>
+  {% assign sorted = category.last | reverse %}
+  {% for post in sorted %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+  </ul>
+
 {% endfor %}
-</ul>

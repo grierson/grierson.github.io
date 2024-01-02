@@ -1,0 +1,46 @@
+= WIP Simple overview
+:page-layout: post
+:page-category: simple
+:revdate: 2024-01-01
+
+Makes things that only have one role/task/concept as things that are
+interwinded need to be considered together.
+Simple makes it easier your systems easier to understand and provides agility
+overtime.
+
+Design is about pulling things apart.
+
+Having a simple design gives you agility so that you can
+* Use in a different context
+* Substitute with something else
+* Combine with other tools
+* Repurpose for other uses
+
+Review the trade-offs of your design decisions rather than just looking at the benefits
+and integrating it into your system without considering the cost.
+
+== Principles
+
+* Do one thing and do it well
+* Single responsibility principle
+   ** The Single Responsibility Principle (SRP): Gather together those things that change for the same reasons and at the same times. Separate those things that change for different reasons or at different times.
+
+== Applied
+
+* Domain-driven design
+   ** Ubiquitous language - Give works specific meaning
+   ** Bounded context - A specific responsibility enforced by explicit boundaries
+   ** Context map - A description of the relationships between bounded contexts
+   ** Anti-corruption layer - A layer that translates between two domains
+   ** Core domain - The part of the domain that is most important to the success of the business
+   ** Shared kernel - A part of the domain that is shared between two or more bounded contexts
+* Hexagonal architecture
+   ** Ports and adapters
+   ** Onion architecture
+   ** Clean architecture
+* CQRS
+* Event sourcing
+* Event-driven architecture
+   * Queues over call chains
+* Microservices
+* Functional programming

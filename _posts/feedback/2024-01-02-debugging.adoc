@@ -1,8 +1,9 @@
 = Debugging
 :page-layout: post
 :page-category: feedback
+:revdate: 2024-01-02
 
-== TL;DR Debugging
+== TL;DR
 
 - Apply the scientific method in small steps, writing down your experiments
 - Breakdown and simplify the problem.
@@ -43,8 +44,8 @@ Something isn't working as expected.
 
 === 🔥🔥🔥 STATE THE PROBLEM 🔥🔥🔥
 
-[quote, Lewis Carroll]
-If you don't know where you are going, any road will get you there.
+[quote, Yogi Berra]
+If you don't know where you are going, you might wind up someplace else.
 
 image::writing.png[]
 

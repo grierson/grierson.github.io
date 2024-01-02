@@ -1,0 +1,27 @@
+= Feedback overview
+:page-layout: post
+:page-category: feedback
+:revdate: 2024-01-01
+
+[quote, Yogi Berra]
+If you don't know where you are going, you might wind up someplace else.
+
+- Apply the scientific method in small steps, writing down your experiments
+- Work iteratively, and move forward in small steps
+- Breakdown and simplify the problem.
+- (Rich Hickey) - Father Wattson's questions
+  ** Where are you at?
+  ** Where are you going?
+  ** What do you know?
+  ** What do you need to know?
+
+[mermaid]
+----
+flowchart LR
+    Failure -->|Why?| Hypothesis
+    Hypothesis -->|Suggests| Experiment
+    Experiment -->|Produces| Observation
+    Observation -->|Falsified?/Needs refinement| Hypothesis
+    Observation -->|Something is wrong| Failure
+    Observation -->|Actual cause| Theory
+----

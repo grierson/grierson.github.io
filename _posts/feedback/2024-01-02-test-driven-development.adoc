@@ -1,0 +1,22 @@
+= Test Driven Development
+:page-layout: post
+:page-category: feedback
+:revdate: 2024-01-02
+
+== TL;DR
+
+- Apply the scientific method in small steps, writing down your experiments
+- Breakdown and simplify the problem.
+- (Rich Hickey) - Father Wattson's questions
+  - Where are you at?
+  - Where are you going?
+  - What do you know?
+  - What do you need to know?
+
+[mermaid]
+----
+flowchart LR
+    Fail --> Pass
+    Pass --> Refactor
+    Refactor --> Fail
+----
