@@ -1,0 +1,214 @@
+= Hypermedia as the Engine of Application State (HATEOAS)
+:page-layout: post
+:page-category: simple
+:revdate: 2024-01-03
+
+[quote,https://htmx.org/essays/hateoas]
+A REST client needs little to no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
+The restrictions imposed by HATEOAS decouples client and server.
+This enables server functionality to evolve independently.
+
+To demonstate what that means I've created a strawman bank account response to demonstrate the benefits of HATEOAS.
+
+```json
+// Non-Hypermedia Bank account response
+{
+  "cardId": 123,
+  "balance" 100,
+}
+```
+
+== Location transparency
+
+🤔 **Problem**: I would like to withdraw from my bank account
+
+So I check the API documentation (Swagger) and hard-code the URL into my client.
+
+[source,clojure]
+----
+(defn withdraw [accountId]
+  (http/post "http://www.bank.com/account/" accountId "/withdraw"))
+----
+
+[WARNING]
+====
+This **couples** the client and server as the URL is hard coded into the client
+====
+
+So if the address changed for example to a new `v2` endpoint.
+Then you need to go into your client again, update the URL, and redeploy.
+
+This is avoided when using `HATEOAS` as the server tell your client what the correct address is.
+
+[source,json]
+----
+// HATEOAS Bank account response
+{
+  ...
+  "_links": {
+    "withdraw": "http://www.bank.com/account/123/withdraw"
+  }
+}
+----
+
+Then in our client we just call `POST` on the `withdraw` link.
+
+[source,clojure]
+----
+(defn withdraw [accountId]
+  (let [discovery (http/get "http://www.bank.com")]
+    (http/post (get-in discovery [:_links :withdraw]))))
+----
+
+It doesn’t matter if the URL changes like in the `v2` example above as we’ve added a layer of indirection via the links and having the server tell the client the url.
+
+== Resource references
+
+🤔 **Problem**: What does `cardId` refer to?
+
+Say we need to create a new `Payment service` that has a `/payment` resource that requires a `card` to check the balance.
+
+A naive implementation would be to have the `/payment` resource take a `cardId`
+
+[cols="1,2"]
+|===
+| /payment request
+| /payment handler
+a|
+[source, json]
+----
+{
+  "card": 123
+  ...
+}
+----
+
+a|
+[source, clojure]
+----
+(defn payment-resource [request]
+  (let [card-id (:cardId request)
+        card-url (str "http://www.bank.com/cards/" cardId)
+        card (http/GET card-url)]
+    (> 0 (:balance card))))
+----
+|===
+
+[WARNING]
+====
+However this would cause the `Location transparency` issue if the URL changed.
+====
+
+Instead having `/payment` accept a `card url` to discover the `card` allows for the card location to change in the future.
+
+[cols="1,2"]
+|===
+| /payment request
+| /payment handler
+a|
+[source,json]
+----
+{
+  "card": "http://www.bank.com/cards/123"
+}
+----
+
+a|
+[source,clojure]
+----
+; HATEOAS Bank payment client
+(defn payment-resource [request]
+  (let [card-url (:card request)
+        card (http/GET card-url)]
+    (> 0 (:balance card))))
+----
+|===
+
+It also allows different resources to be passed into the `/payment` resource as long as it contains a `balance` property. 
+So, we could support a new `crypto` resource in the future as long as it returns a balance property.
+
+[source,json]
+----
+{
+  "card": "http://www.bank.com/v2/crypto/123"
+}
+----
+
+== Hypermedia controls
+
+🤔 **Problem**: Should I be able to withdraw?
+
+If my account balance is 0 should I be able to withdraw? Probably not.
+So we add withdrawal conditional logic to our client to prevent making bad requests.
+
+[source,javascript]
+----
+if (response.balance > 0) return <button>withdraw</button>
+----
+
+[WARNING]
+====
+This creates **coupling**  as the client needs to know about withdrawal conditional logic
+====
+
+What happens if business rules change and users can now withdraw into overdrafts?
+If you have multiple clients, this problem only multiplies, as they all need to be updated to support the new business rule.
+
+Instead, with HATEOAS, we return links (actions) you can perform on the resource.
+Simplifying UIs by moving all conditional logic onto the server side so clients don't have to implement.
+
+[cols="1,1"]
+|===
+| HATEOAS Account zero balance
+| HATEOAS Account with balance
+a|
+[source,json]
+----
+{
+  "balance": 0,
+  "_links": {
+    "deposit:" "/deposit/123"
+  }
+}
+----
+
+a|
+[source,json]
+----
+{
+  "balance": 100,
+  "_links": {
+    "deposit:" "/deposit/456",
+    "withdraw:" "/withdraw/456"
+  }
+}
+----
+|===
+
+Then within our client we can just check if the link exists.
+
+[sourcs,javascript]
+----
+if (hateos/has-link response "withdraw") return <button>withdraw</button>
+----
+
+So, if we had the exact business requirement changes as before, allowing users to go into overdrafts.
+Then, it's all handled on the server side, allowing the conditional logic to change in the future without client changes.
+The new response would look like this, and there would be no need to make any changes to clients.
+
+[sourcs,json]
+----
+{
+  "balance": 0,
+  "_links": {
+    "deposit:" "/deposit/123"
+    "withdraw:" "/withdraw/123"
+  }
+}
+----
+
+
+== References
+
+- https://htmx.org/essays/hateoas/[HATEOAS by HTMX]
+- https://medium.com/kroo/how-kroo-maintains-sanity-in-distributed-systems-part-1-adad8cf095bf[How Kroo maintains sanity in distributed systems — Part 1 By Jonas Svalin]
