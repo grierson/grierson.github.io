@@ -1,0 +1,11 @@
+= WIP Domain Driven Design
+:page-layout: post
+:page-category: simple
+:revdate: 2024-01-03
+
+* Ubiquitous language - Give works specific meaning
+* Bounded context - A specific responsibility enforced by explicit boundaries
+* Context map - A description of the relationships between bounded contexts
+* Anti-corruption layer - A layer that translates between two domains
+* Core domain - The part of the domain that is most important to the success of the business
+* Shared kernel - A part of the domain that is shared between two or more bounded contexts
