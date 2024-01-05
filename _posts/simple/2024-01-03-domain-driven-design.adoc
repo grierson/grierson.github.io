@@ -3,9 +3,92 @@
 :page-category: simple
 :revdate: 2024-01-03
 
-* Ubiquitous language - Give works specific meaning
-* Bounded context - A specific responsibility enforced by explicit boundaries
-* Context map - A description of the relationships between bounded contexts
-* Anti-corruption layer - A layer that translates between two domains
-* Core domain - The part of the domain that is most important to the success of the business
-* Shared kernel - A part of the domain that is shared between two or more bounded contexts
+Design and language based on the domain not technology.
+
+= Strategic design
+
+Hours of planning will save you days of coding.
+
+== Bounded context
+
+A grouping of related concepts, roles, rules, and terms.
+
+== Ubiquitous language
+
+NOTE: Ubiquitous: present, appearing, or found everywhere
+
+The term "order" may be used throughout a business but it's meaning differs per department.
+
+* A customer place's an "order" for a product
+* A warehouse "order's" more stock
+* Customer service department "order" a refund
+* etc..
+
+[mermaid]
+----
+flowchart TB
+    subgraph Store
+      o1[Order]
+    end
+
+    subgraph Warehouse
+      o2[Order]
+    end
+
+    subgraph CustomerService["Customer Service"]
+      o3[Order]
+    end
+----
+
+Each of these "orders" are different from one another and handled differently.
+To prevent misunderstandings when taking about "orders" create a glossary per bounded context that gives a specific defintion per context.
+Also ensure that the same "Ubiquitous language" is used by everyone throughout the project lifecycle from design to implementation.
+
+NOTE: Glossary's are "simple" as each word has a specific meaning per context.
+
+== Context map
+
+Map of relationships between bounded contexts
+
+== Core domain
+
+A problem that justifies writing custom software rather than buying off the shelf or outsourcing.
+This is the main focus of the business.
+
+* Amazon: Selling products
+* Apple: Computers
+* Netflix: Streaming
+* Starbucks: Selling coffee
+* etc..
+
+== Supporting subdomain
+
+A problem that is not the main focus of the business but still needs to be solved.
+
+== Generic domain
+
+Things that are common to all businesses.
+Solutions are available off the shelf or can be outsourced.
+
+* Invoicing
+* Accounting
+
+= Tactical design
+
+Tactical design is the implementation of the strategic design.
+
+== Entity
+
+Uniquely identifiable
+
+== Value object
+
+Values are the same if they have the same value
+
+== Aggregate
+
+Transactional boundary for all associated objects to ensure consistency.
+
+== Anti-corruption layer
+
+Translation between boundaries
