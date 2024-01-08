@@ -3,7 +3,7 @@
 :page-category: simple
 :revdate: 2024-01-01
 
-Design is about pulling things apart.
+Design is about pulling things apart. (Decomposition)
 
 Makes things that only have one role/task/concept so it's easier to understand.
 As things that are interwinded need to be considered together.
@@ -15,33 +15,53 @@ Having a simple design gives you felexibility/agility and keeps your options ope
 * Substitute with something else
 * Combine with other tools
 
-Review the trade-offs of your design decisions rather than just looking at the benefits
-and integrating it into your system without considering the cost.
-Avoid one way doors.
+== Trade-offs
 
-== Connections
+Review the trade-offs (costs) of your design decisions rather than just looking at the benefits
+and integrating it into your system without considering the cost.
+
+[quote]
+Let use `npm install hairball`, it's easy to use and has everything we need.
+
+Avoid one way doors that has big upfront costs, and no way back.
+
+Kent Beck - A Daily Practice of Emirical Software Design
+
+* You have an idea and want to test it out
+* So you need to implement some behavior to trail it out
+* But structure determines the easy of implementing the behavior
+
+[mermaid]
+----
+graph LR
+  A[Idea] --> B[structure] --> C[behavior] --> A
+----
+
+== Coupling
+
+Change requires updates in other places.
 
 * CQRS
 * Event sourcing
 * Event-driven architecture (Queues)
 * API
 
-== Grouping
+== Cohesion - Convenient Coupling
 
-* Do one thing and do it well
-* Cohesion
+Group things that change for the same reason.
+
+* Do one thing and do it well - Unix philosophy
 * Single responsibility principle
    ** The Single Responsibility Principle (SRP): Gather together those things that change for the same reasons and at the same times. Separate those things that change for different reasons or at different times.
-* Encapsulation
-* Information hiding
+* Encapsulation - Information hiding
 * Separation of concerns
 * Modularity
 * Bounded context
-* Architecture
-   ** Hexagonal / Ports and adapters / Onion / Clean architecture
+* Architecture (Hexagonal / Ports and adapters / Onion / Clean architecture)
 
 == References
 
 * https://www.youtube.com/watch?v=LKtk3HCgTa8[Simple Made Easy]
 * https://www.youtube.com/watch?v=rI8tNMsozo0[Simplicity Matters]
 * https://www.youtube.com/watch?v=cidchWg74Y4[Simplicity Ain't Easy]
+* https://www.youtube.com/watch?v=yBEcq23OgB4[A Daily Practice of Emirical Software Design]

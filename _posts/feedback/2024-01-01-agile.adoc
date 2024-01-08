@@ -1,7 +1,7 @@
 = WIP Agile
 :page-layout: post
 :page-category: feedback
-:revdate: 2024-01-01
+:revdate: 2024-01-02
 
 == TL;DR Agile
 

@@ -1,7 +1,7 @@
 = WIP Contionus Delivery
 :page-layout: post
 :page-category: feedback
-:revdate: 2024-01-01
+:revdate: 2024-01-02
 
 == What is - Continuous Integration (CI)
 
@@ -9,8 +9,8 @@ Frequently committing small releasable changes to master/main which are
 verified on push
 
 1. Small releasable commits
-1. Push to master/main
-1. CI Runs
+2. Push to master/main
+3. CI Runs
    ** Pass Linting
    ** Pass Tests
    ** Build image

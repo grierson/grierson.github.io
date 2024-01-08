@@ -25,3 +25,5 @@ flowchart LR
     Observation -->|Something is wrong| Failure
     Observation -->|Actual cause| Theory
 ----
+
+Measure increase revenue, reduce costs, or test hypthosis.
