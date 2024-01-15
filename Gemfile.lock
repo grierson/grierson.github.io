@@ -43,8 +43,6 @@ GEM
     jekyll-asciidoc (3.0.1)
       asciidoctor (>= 1.5.0, < 3.0.0)
       jekyll (>= 3.0.0)
-    jekyll-feed (0.17.0)
-      jekyll (>= 3.7, < 5.0)
     jekyll-sass-converter (3.0.0)
       sass-embedded (~> 1.54)
     jekyll-watch (2.2.1)
@@ -101,7 +99,6 @@ DEPENDENCIES
   http_parser.rb (~> 0.6.0)
   jekyll (~> 4.3.3)
   jekyll-asciidoc (~> 3.0.1)
-  jekyll-feed (~> 0.17)
   pygments.rb (~> 2.4.1)
 
 BUNDLED WITH
