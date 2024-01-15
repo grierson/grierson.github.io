@@ -3,9 +3,14 @@
 :page-category: simple
 :revdate: 2024-01-03
 
+== Strategic design
+
 Design and language based on the domain not technology.
 
-== Strategic design
+[quote, Alberto Brandolini]
+It is not the domain experts knowledge that goes into production, it is the assumption of the developers that goes into production.
+
+Avoid playing the telephone game by ensuring domain experts are part of the design.
 
 Hours of planning will save you days of coding.
 
@@ -50,15 +55,22 @@ NOTE: Glossary's are "simple" as each word has a specific meaning per context.
 
 Map of relationships between bounded contexts
 
+* Open host service
+** A service that exposes it's domain to other bounded contexts
+* Conformist
+** 
+* Anti-corruption layer
+** Translation between boundaries
+
 === Core domain
 
 A problem that justifies writing custom software rather than buying off the shelf or outsourcing.
 This is the main focus of the business.
 
-* Amazon: Selling products
 * Apple: Computers
-* Netflix: Streaming
-* Starbucks: Selling coffee
+* Barbers: Haircuts
+* Netflix: Video Streaming
+* Starbucks: Coffee
 * etc..
 
 === Supporting subdomain
@@ -77,6 +89,11 @@ Solutions are available off the shelf or can be outsourced.
 
 Tactical design is the implementation of the strategic design.
 
+=== Domain Events
+
+Things that happen in the domain.
+Event Storming[https://www.eventstorming.com/]
+
 === Entity
 
 Uniquely identifiable
@@ -87,7 +104,7 @@ Values are the same if they have the same value
 
 === Aggregate
 
-Transactional boundary for all associated objects to ensure consistency.
+A transactional boundary for a grouping of associated entites and value objects to ensure consistency.
 
 === Anti-corruption layer
 

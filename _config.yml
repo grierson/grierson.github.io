@@ -5,9 +5,6 @@ github_username:  grierson
 
 permalink: none
 
-plugins:
-  - jekyll-feed
-
 keep_files:
 - images
 asciidoctor:

@@ -1,0 +1,16 @@
+= WIP Domain Storytelling
+:page-layout: post
+:page-category: visual
+:revdate: 2024-01-11
+
+[graphviz, dot, svg]
+----
+digraph G {
+	DO [ label = "Domain Expert" ]
+	DEV [ label = "Developer" ]
+	DO -> story [ label = "1. Story" ]
+	story -> DEV [ label = "2. Story" ]
+	DEV -> Image [ label = "3. Image" ]
+	DO -> Image [ label = "4. Image" ]
+}
+----

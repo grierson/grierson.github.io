@@ -3,61 +3,73 @@
 :page-category: simple
 :revdate: 2024-01-01
 
-Design is about pulling things apart. (Decomposition)
+[quote, Edsger W. Dijkstra]
+Simplicity is prerequisite for reliability.
 
-Makes things that only have one role/task/concept so it's easier to understand.
-As things that are interwinded need to be considered together.
-It's not about cardinality, but about the number of concepts.
+[quote, Rich Hickey, Simplicity Matters]
+Design is about pulling things apart.
 
-Having a simple design gives you felexibility/agility and keeps your options open for the future.
+[quote, Eric Evans]
+Tackling complexity is the heart of software design.
 
-* Use in a different context
-* Substitute with something else
+== What is simple
+
+[quote, Etymoline.com, Simple definition]
+from Latin simplex "single, simple, plain, unmixed, uncompounded," literally "one-fold,"
+from PIE compound of root *sem- (1) "one; as one, together with" + *plac- "-fold," from PIE root *plek- "to plait."
+
+Something that only has one role/task/concept.
+It's about the lack of interleaving not the cardinality.
+
+[quote, Miller's Experiment]
+The Magical Number Seven experiment purports that the number of objects an average human can hold in working memory is 7 +/- 2
+
+Things interwinded need to be considered together.
+So us humans who can only hold 7 +/- 2 things in our head also need to consider the dependencies even when they're not relevant.
+Making it more difficult to understand and reason about our systems.
+
+[quote, Rich Hickey, Simplicity Matters]
+Your ability to reason about your program is critical. [...] Complexity will dominate anything that you can do.
+
+== Why simple matters
+
+[quote, Idiom]
+You've made your bed, now lie in it
+
+[quote, Jeff Bezos]
+Some decisions are so consequential and so important and so hard to reverse that they really are one way door decisions.
+You go in that door, you're not coming back.
+
+Don't choose the first easy option you find.
+Look at the trade-offs against other options.
+"Let's use `npm install hairball`, it's super fast" - but at what cost?
+
+Letting complexity go unchecked will make future changes difficult.
+
+Instead by having a simple design it gives you opportunity by keeping your options open in the future.
+
+Allowing you to ..
+
+* Repurpose components and use in a different context
+* Substitute components out with alternatives
+* Move components around to different environments
 * Combine with other tools
 
-== Trade-offs
+== Coupling and Cohesion
 
-Review the trade-offs (costs) of your design decisions rather than just looking at the benefits
-and integrating it into your system without considering the cost.
+[quote, Ruth Malan]
+System design is contextual design — it is inherently about boundaries (what’s in, what’s out, what spans, what moves between), and about tradeoffs. 
+It reshapes what is outside, just as it shapes what is inside.
 
-[quote]
-Let use `npm install hairball`, it's easy to use and has everything we need.
+[quote, Robert C. Martin]
+Gather together those things that change for the same reasons and at the same times. Separate those things that change for different reasons or at different times.
 
-Avoid one way doors that has big upfront costs, and no way back.
-
-Kent Beck - A Daily Practice of Emirical Software Design
-
-* You have an idea and want to test it out
-* So you need to implement some behavior to trail it out
-* But structure determines the easy of implementing the behavior
-
-[mermaid]
-----
-graph LR
-  A[Idea] --> B[structure] --> C[behavior] --> A
-----
-
-== Coupling
-
-Change requires updates in other places.
-
-* CQRS
-* Event sourcing
-* Event-driven architecture (Queues)
-* API
-
-== Cohesion - Convenient Coupling
-
-Group things that change for the same reason.
+Coupling is about how your modules depend on each other while Cohesion is about what should be within a module.
 
 * Do one thing and do it well - Unix philosophy
-* Single responsibility principle
-   ** The Single Responsibility Principle (SRP): Gather together those things that change for the same reasons and at the same times. Separate those things that change for different reasons or at different times.
-* Encapsulation - Information hiding
+* Bounded context - Domain driven design
 * Separation of concerns
 * Modularity
-* Bounded context
-* Architecture (Hexagonal / Ports and adapters / Onion / Clean architecture)
 
 == References
 
