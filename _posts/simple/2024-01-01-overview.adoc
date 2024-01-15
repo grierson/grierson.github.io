@@ -55,7 +55,7 @@ Allowing you to ..
 * Move components around to different environments
 * Combine with other tools
 
-== Coupling and Cohesion
+== WIP Coupling and Cohesion
 
 [quote, Ruth Malan]
 System design is contextual design — it is inherently about boundaries (what’s in, what’s out, what spans, what moves between), and about tradeoffs. 

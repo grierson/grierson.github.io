@@ -14,13 +14,26 @@ Avoid playing the telephone game by ensuring domain experts are part of the desi
 
 Hours of planning will save you days of coding.
 
-=== Bounded context
+=== Bounded context and Ubiquitous language
 
-A grouping of related concepts, roles, rules, and terms.
+Bounded Context::
+[quote, Bound definition, Etymology Online]
+"to form the boundary of," also "to set the boundaries of, confine within limits;
 
-=== Ubiquitous language
+[quote, Context definition, Etymology Online]
+"a composition, a chronicle, the entire text of a writing," from Latin contextus "a joining together,"
+originally past participle of contexere "to weave together,"
+from assimilated form of com "with,
+together" (see con-) + texere "to weave, to make" (from PIE root *teks- "to weave,"
+also "to fabricate").
 
-NOTE: Ubiquitous: present, appearing, or found everywhere
+A grouping of related concepts, roles, rules, and terms that share the same context.
+A department within a business is a simplistic example of a bounded context.
+
+Ubiquitous language::
+
+[quote, Ubiquitous definition, Etymology Online]
+"being, existing, or turning up everywhere,"
 
 The term "order" may be used throughout a business but it's meaning differs per department.
 
@@ -46,24 +59,23 @@ flowchart TB
 ----
 
 Each of these "orders" are different from one another and handled differently.
-To prevent misunderstandings when taking about "orders" create a glossary per bounded context that gives a specific defintion per context.
-Also ensure that the same "Ubiquitous language" is used by everyone throughout the project lifecycle from design to implementation.
+To prevent misunderstandings when taking about "orders" create a `Ubiquitous Language` (glossary) per bounded context that gives a specific defintion per context.
+Also ensure that the same `Ubiquitous language` is used by everyone throughout the project lifecycle from design to implementation.
 
-NOTE: Glossary's are "simple" as each word has a specific meaning per context.
-
-=== Context map
+=== WIP: Context map
 
 Map of relationships between bounded contexts
 
 * Open host service
 ** A service that exposes it's domain to other bounded contexts
 * Conformist
-** 
+** A bounded context that conforms to another bounded context
 * Anti-corruption layer
 ** Translation between boundaries
 
-=== Core domain
+=== Sub domains
 
+Core subdomain::
 A problem that justifies writing custom software rather than buying off the shelf or outsourcing.
 This is the main focus of the business.
 
@@ -73,11 +85,11 @@ This is the main focus of the business.
 * Starbucks: Coffee
 * etc..
 
-=== Supporting subdomain
+Supporting subdomain::
 
 A problem that is not the main focus of the business but still needs to be solved.
 
-=== Generic domain
+Generic domain::
 
 Things that are common to all businesses.
 Solutions are available off the shelf or can be outsourced.
@@ -85,27 +97,18 @@ Solutions are available off the shelf or can be outsourced.
 * Invoicing
 * Accounting
 
-== Tactical design
+== WIP: Tactical design
 
 Tactical design is the implementation of the strategic design.
 
-=== Domain Events
-
-Things that happen in the domain.
-Event Storming[https://www.eventstorming.com/]
-
-=== Entity
-
-Uniquely identifiable
-
-=== Value object
-
-Values are the same if they have the same value
-
-=== Aggregate
-
-A transactional boundary for a grouping of associated entites and value objects to ensure consistency.
-
-=== Anti-corruption layer
-
-Translation between boundaries
+* Domain Events
+** Facts / Things that happen in the domain
+** link:https://www.eventstorming.com[Event Storming]
+* Entity
+** Uniquely identifiable
+* Value object
+** Structual equality
+* Aggregate
+** A transactional boundary for a grouping of associated entites and value objects to ensure consistency.
+* Anti-corruption layer
+** Translation between boundaries
