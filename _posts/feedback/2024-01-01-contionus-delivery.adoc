@@ -1,4 +1,4 @@
-= WIP Contionus Delivery
+= Contionus Delivery
 :page-layout: post
 :page-category: feedback
 :revdate: 2024-01-02

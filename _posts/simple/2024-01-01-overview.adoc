@@ -1,4 +1,4 @@
-= WIP Simple overview
+= Simple overview
 :page-layout: post
 :page-category: simple
 :revdate: 2024-01-01
@@ -12,7 +12,7 @@ Design is about pulling things apart.
 [quote, Eric Evans]
 Tackling complexity is the heart of software design.
 
-== What is simple
+== What is Simple
 
 [quote, Etymoline.com, Simple definition]
 from Latin simplex "single, simple, plain, unmixed, uncompounded," literally "one-fold,"
@@ -21,17 +21,29 @@ from PIE compound of root *sem- (1) "one; as one, together with" + *plac- "-fold
 Something that only has one role/task/concept.
 It's about the lack of interleaving not the cardinality.
 
+A simple design gives you opportunity and keeps your options open for the future.
+
+Allowing you to ..
+
+* Repurpose components and use in a different context
+* Substitute components out with alternatives
+* Move components around to different environments
+* Combine with other tools
+
+== Why Simple matters
+
 [quote, Miller's Experiment]
 The Magical Number Seven experiment purports that the number of objects an average human can hold in working memory is 7 +/- 2
 
-Things interwinded need to be considered together.
-So us humans who can only hold 7 +/- 2 things in our head also need to consider the dependencies even when they're not relevant.
-Making it more difficult to understand and reason about our systems.
+`Things intertwined need to be considered together.`
+
+Dependencies to your problem take up some of the 7(+/- 2) space in your head, burdening reasoning.
+You're already trying to solve a domain problem, don't let your tools make it harder.
 
 [quote, Rich Hickey, Simplicity Matters]
 Your ability to reason about your program is critical. [...] Complexity will dominate anything that you can do.
 
-== Why simple matters
+== Being Simple: Trade-offs
 
 [quote, Idiom]
 You've made your bed, now lie in it
@@ -46,16 +58,9 @@ Look at the trade-offs against other options.
 
 Letting complexity go unchecked will make future changes difficult.
 
-Instead by having a simple design it gives you opportunity by keeping your options open in the future.
+== Coupling and Cohesion
 
-Allowing you to ..
-
-* Repurpose components and use in a different context
-* Substitute components out with alternatives
-* Move components around to different environments
-* Combine with other tools
-
-== WIP Coupling and Cohesion
+Coupling and Cohesion are two other popular terms for describing the same concept.
 
 [quote, Ruth Malan]
 System design is contextual design — it is inherently about boundaries (what’s in, what’s out, what spans, what moves between), and about tradeoffs. 
@@ -64,16 +69,22 @@ It reshapes what is outside, just as it shapes what is inside.
 [quote, Robert C. Martin]
 Gather together those things that change for the same reasons and at the same times. Separate those things that change for different reasons or at different times.
 
-Coupling is about how your modules depend on each other while Cohesion is about what should be within a module.
+Cohesion::
+Degree to which the elements inside a module belong together.
 
+Coupling::
+Degree to which a module is connected to other modules or depends on other modules.
+
+Same umbrella::
 * Do one thing and do it well - Unix philosophy
-* Bounded context - Domain driven design
-* Separation of concerns
+* Bounded context (Domain driven design)
+* Separation of concerns - Group
 * Modularity
+* Feature-Based structure
 
 == References
 
 * https://www.youtube.com/watch?v=LKtk3HCgTa8[Simple Made Easy]
 * https://www.youtube.com/watch?v=rI8tNMsozo0[Simplicity Matters]
 * https://www.youtube.com/watch?v=cidchWg74Y4[Simplicity Ain't Easy]
-* https://www.youtube.com/watch?v=yBEcq23OgB4[A Daily Practice of Emirical Software Design]
+* https://www.youtube.com/watch?v=YDNR_gfBk0Q[SOLID Principles? Node, Just Coupling and Cohesion]

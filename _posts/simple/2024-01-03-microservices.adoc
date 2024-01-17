@@ -1,4 +1,4 @@
-= WIP Microservices
+= Microservices
 :page-layout: post
 :page-category: simple
 :revdate: 2024-01-03
