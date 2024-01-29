@@ -5,18 +5,15 @@
 
 == Strategic design
 
-Design and language based on the domain not technology.
-
 [quote, Alberto Brandolini]
 It is not the domain experts knowledge that goes into production, it is the assumption of the developers that goes into production.
 
-Avoid playing the telephone game by ensuring domain experts are part of the design.
+Design your system and language based of the domain.
 
-Hours of planning will save you days of coding.
+Avoid playing the telephone game by ensuring domain experts are part of the design process.
 
 === Bounded context and Ubiquitous language
 
-Bounded Context::
 [quote, Bound definition, Etymology Online]
 "to form the boundary of," also "to set the boundaries of, confine within limits;
 
@@ -27,8 +24,9 @@ from assimilated form of com "with,
 together" (see con-) + texere "to weave, to make" (from PIE root *teks- "to weave,"
 also "to fabricate").
 
-A grouping of related concepts, roles, rules, and terms that share the same context.
-A department within a business is a simplistic example of a bounded context.
+A `Bounded Context` is grouping of related concepts, roles, rules, and terms that share the same context, much like `High Cohesion`.
+A department (HR, Sales, Warehouse) within a business is a simplistic example of a bounded context.
+They have their own language and rules that are specific to their context.
 
 Ubiquitous language::
 
@@ -62,18 +60,9 @@ Each of these "orders" are different from one another and handled differently.
 To prevent misunderstandings when taking about "orders" create a `Ubiquitous Language` (glossary) per bounded context that gives a specific defintion per context.
 Also ensure that the same `Ubiquitous language` is used by everyone throughout the project lifecycle from design to implementation.
 
-=== WIP: Context map
-
-Map of relationships between bounded contexts
-
-* Open host service
-** A service that exposes it's domain to other bounded contexts
-* Conformist
-** A bounded context that conforms to another bounded context
-* Anti-corruption layer
-** Translation between boundaries
-
 === Sub domains
+
+Not all domains are equal. Some are more important than others.
 
 Core subdomain::
 A problem that justifies writing custom software rather than buying off the shelf or outsourcing.
@@ -88,6 +77,7 @@ This is the main focus of the business.
 Supporting subdomain::
 
 A problem that is not the main focus of the business but still needs to be solved.
+Integrating with another service for example, you need to interact with their domain but setting up the infrastructure to do so is not the main focus of the business.
 
 Generic domain::
 
@@ -96,6 +86,35 @@ Solutions are available off the shelf or can be outsourced.
 
 * Invoicing
 * Accounting
+
+=== Context map
+
+The relationships between bounded contexts.
+
+Conformist::
+[mermaid]
+----
+flowchart LR
+  Upstream --> Downstream
+----
+A bounded context that conforms to another bounded context.
+So a supplier/consumer (upstream/downstream) relationship where the downstream is dependent on the upstream.
+If the upstream changes the downstream needs to change as well.
+
+Open host service::
+A service that exposes it's domain to other bounded contexts
+
+Anti-corruption layer::
+[mermaid]
+----
+flowchart LR
+    subgraph Downstream
+      ACL[Anti-corruption Layer] --> Downstream
+    end
+  Upstream --> ACL
+----
+
+A translation layer between contexts so prevent Upstream concepts leaking into Downstream contexts.
 
 == WIP: Tactical design
 
