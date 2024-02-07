@@ -1,0 +1,167 @@
+= Values
+:page-layout: post
+:page-category: simple
+:revdate: 2024-02-03
+
+Functional programming favours `pure functions` and `immutable data` to make code more predictable and easier to reason about.
+
+== Side Effects - Implicit Change
+
+[source, csharp]
+----
+class Data
+{
+    public int Value { get; set; }
+}
+
+var a = new Data { Value = 1 };
+var service = new Service();
+
+service.Process(a);
+
+Assert.Equal(1, a.Value);
+----
+
+Is this true? `Well, it depends` on what Process does right.
+So we need to look at the `Process` method to see if it modifies the `Data` object.
+Where we find that it does, so the test is not true.
+
+[mermaid]
+----
+flowchart LR
+    style Process fill:#FF6961
+    Data --> Process
+----
+
+[source, csharp]
+----
+class Service
+{
+    public void Process(Data data)
+    {
+        data.Value = 2;
+    }
+}
+----
+
+Whereas a functional approach with `pure functions`, `Process` explicitly returns returns a new instance of `Data`.
+
+[source, fsharp]
+----
+let data = { Value = 1 }
+let new_data = process data
+
+Assert.Equal(new_data.Value = 2)
+----
+
+[source, fsharp]
+----
+let process data = { data with Value = 2 }
+----
+
+[mermaid]
+----
+flowchart LR
+    style Process fill:#00A86B
+    Data --> Process --> NewData[New Data]
+----
+
+This approach is easier to test, as it's just same input same output.
+Whereas if the function was stateful, we need to get the function back into the same state before we can test it.
+
+
+
+== Shared State - Implicit Dependencies
+
+Using `shared state` hides dependencies between methods by making them implicit which makes it difficult to reason about.
+So in the example below the method calls within `Handle` are in a specific order, if we changed it we would get Runtime errors.
+
+[source, csharp]
+----
+class AccountService
+(IRepository _respository)
+{
+    private Customer _customer;
+    private Address _address;
+
+    public void Handle
+    (string name, string address)
+    {
+        SetAddress(address);
+        // Implicit dependency on address
+        CreateCustomer(customer);
+        // Implicit dependency on customer
+        SaveCustomer();
+    }
+
+    private void SetAddress
+    (string addressString)
+    {
+        _address = new Address(addressString);
+    }
+
+    private void CreateCustomer
+    (string name)
+    {
+        _customer = new Customer(name, _address);
+    }
+
+    private void SaveCustomer()
+    {
+        _repository.Save(_customer);
+    }
+}
+----
+
+[mermaid]
+----
+flowchart LR
+    subgraph Handle
+        style STATE fill:#FF6961
+        SetAddress -- 1.Write Address --> STATE[Shared State]
+        STATE -- 2.Read Address --> CreateCustomer -- 3.Write Customer --> STATE
+        STATE -- 4.Read Customer --> SaveCustomer[Save Customer]
+    end
+----
+
+Instead of using `shared state` we can create a data pipeline with functions that produce data that's piped into more functions creating explicit dependencies.
+
+[source, fsharp]
+----
+type Address = Address of string
+type Customer = Customer of string * Address
+
+let createAddress (address: string) =
+    Address address
+let createCustomer (name: string) (address: Address) =
+    Customer name address
+
+let handle
+(IRepository repository)
+(name: string)
+(address: string) =
+    let address = createAddress address
+    let customer = createCustomer name address
+    saveCustomer repository customer
+----
+
+
+[mermaid]
+----
+flowchart LR
+    style Name fill:#ADD8E6
+    style Address fill:#ADD8E6
+    style Customer fill:#ADD8E6
+    subgraph Handle
+        CreateAddress --> Address
+        Name --> CreateCustomer[Create Customer]
+        Address --> CreateCustomer
+        CreateCustomer --> Customer
+        Customer --> SaveCustomer[Save Customer]
+    end
+----
+
+== References
+
+- https://www.youtube.com/watch?v=-6BsiVyC1kM[The Value of Values - Rich Hickey]
+- https://enterprisecraftsmanship.com/posts/temporal-coupling-and-immutability/[Temporal coupling and immutability - Enterprise Craftsmanship]
