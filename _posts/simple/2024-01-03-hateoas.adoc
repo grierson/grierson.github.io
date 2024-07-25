@@ -8,7 +8,7 @@ A REST client needs little to no prior knowledge about how to interact with an a
 The restrictions imposed by HATEOAS decouples client and server.
 This enables server functionality to evolve independently.
 
-To demonstate what that means I've created a strawman bank account response to demonstrate the benefits of HATEOAS.
+To demonstate I've created a strawman bank account response to demonstrate the benefits of HATEOAS.
 
 ```json
 // Non-Hypermedia Bank account response
@@ -22,23 +22,23 @@ To demonstate what that means I've created a strawman bank account response to d
 
 🤔 **Problem**: I would like to withdraw from my bank account
 
-So I check the API documentation (Swagger) and hard-code the URL into my client.
+I check the API documentation (Swagger) and hard-code the URL into my REST client.
 
 [source,clojure]
 ----
 (defn withdraw [accountId]
-  (http/post "http://www.bank.com/account/" accountId "/withdraw"))
+  (http/post
+    "http://www.bank.com/account/" accountId "/withdraw"))
 ----
 
 [WARNING]
 ====
-This **couples** the client and server as the URL is hard coded into the client
+**coupling** the client and server as the URL is **hard coded** into the client
 ====
 
-So if the address changed for example to a new `v2` endpoint.
-Then you need to go into your client again, update the URL, and redeploy.
+If the address changes e.g. a `v2` endpoint then the **client** also needs to be updated.
 
-This is avoided when using `HATEOAS` as the server tell your client what the correct address is.
+`HATEOAS` avoids this by having the server tell clients what the address is.
 
 [source,json]
 ----
@@ -51,7 +51,7 @@ This is avoided when using `HATEOAS` as the server tell your client what the cor
 }
 ----
 
-Then in our client we just call `POST` on the `withdraw` link.
+Then clients' use the `withdraw` link instead of a hard-coded URL.
 
 [source,clojure]
 ----
@@ -60,13 +60,14 @@ Then in our client we just call `POST` on the `withdraw` link.
     (http/post (get-in discovery [:_links :withdraw]))))
 ----
 
-It doesn’t matter if the URL changes like in the `v2` example above as we’ve added a layer of indirection via the links and having the server tell the client the url.
+The `withdraw` URL can now change like in the `v2` example without breaking changes as we’ve added a layer of indirection via the links. 
+The server is telling the client what the URL is, not the client having out-of-band knowledge from the API docs.
 
 == Resource references
 
-🤔 **Problem**: What does `cardId` refer to?
+🤔 **Problem**: What is `cardId`?
 
-Say we need to create a new `Payment service` that has a `/payment` resource that requires a `card` to check the balance.
+Say we need to create a new `Payment service` with a `/payment` resource that requires a `card` in order to check the balance.
 
 A naive implementation would be to have the `/payment` resource take a `cardId`
 
@@ -96,10 +97,10 @@ a|
 
 [WARNING]
 ====
-However this would cause the `Location transparency` issue if the URL changed.
+`Location transparency` issue if the URL changed.
 ====
 
-Instead having `/payment` accept a `card url` to discover the `card` allows for the card location to change in the future.
+Instead if `/payment` accepted a `card url` it can discover the `card` avoiding the `Location transparency` issue.
 
 [cols="1,2"]
 |===
@@ -124,8 +125,8 @@ a|
 ----
 |===
 
-It also allows different resources to be passed into the `/payment` resource as long as it contains a `balance` property. 
-So, we could support a new `crypto` resource in the future as long as it returns a balance property.
+It also makes `/payment` resource extensible to new types.
+For example `/payment` could support a new `crypto` resource in the future as long as a `balance` property exists.
 
 [source,json]
 ----
@@ -136,10 +137,10 @@ So, we could support a new `crypto` resource in the future as long as it returns
 
 == Hypermedia controls
 
-🤔 **Problem**: Should I be able to withdraw?
+🤔 **Problem**: Can I withdraw?
 
-If my account balance is 0 should I be able to withdraw? Probably not.
-So we add withdrawal conditional logic to our client to prevent making bad requests.
+If an account balance is 0 or below you can not withdraw.
+So naïvely we add the withdrawal conditional logic to our client.
 
 [source,javascript]
 ----
@@ -148,14 +149,15 @@ if (response.balance > 0) return <button>withdraw</button>
 
 [WARNING]
 ====
-This creates **coupling**  as the client needs to know about withdrawal conditional logic
+**coupling** the client to business ruls as it knows about withdrawal conditional logic.
+Also it doesn't stop bad api calls.
 ====
 
-What happens if business rules change and users can now withdraw into overdrafts?
-If you have multiple clients, this problem only multiplies, as they all need to be updated to support the new business rule.
+Then business rules change and users can now withdraw into overdrafts.
+Meaning updating the client, as well as multiple other clients we have created since. :sad face:
 
-Instead, with HATEOAS, we return links (actions) you can perform on the resource.
-Simplifying UIs by moving all conditional logic onto the server side so clients don't have to implement.
+Instead HATEOAS returns links (actions) that you can perform on the resource.
+Simplifying UIs by having one single source of truth for business logic which clients don't have to know about.
 
 [cols="1,1"]
 |===
@@ -185,28 +187,13 @@ a|
 ----
 |===
 
-Then within our client we can just check if the link exists.
+So clients just check if the link exists.
 
-[sourcs,javascript]
+[source,javascript]
 ----
-if (hateos/has-link response "withdraw") return <button>withdraw</button>
+if (hateos/has-link response "withdraw")
+  return <button>withdraw</button>
 ----
-
-So, if we had the exact business requirement changes as before, allowing users to go into overdrafts.
-Then, it's all handled on the server side, allowing the conditional logic to change in the future without client changes.
-The new response would look like this, and there would be no need to make any changes to clients.
-
-[sourcs,json]
-----
-{
-  "balance": 0,
-  "_links": {
-    "deposit:" "/deposit/123"
-    "withdraw:" "/withdraw/123"
-  }
-}
-----
-
 
 == References
 
